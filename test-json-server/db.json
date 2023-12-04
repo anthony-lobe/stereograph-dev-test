@@ -43,11 +43,25 @@
       "etape": "Terminé"
     },
     {
+      "id": 7,
+      "nom": " projet 7",
+      "description": "description 7",
+      "commentaire": " ceci est un commentaire 7 de test",
+      "etape": "En attente"
+    },
+    {
       "id": 8,
       "nom": " projet 8",
       "description": "description 8",
       "commentaire": " ceci est un commentaire 8 de test",
       "etape": "En cours"
+    },
+    {
+      "id": 9,
+      "nom": " projet 9",
+      "description": "description 9",
+      "commentaire": " ceci est un commentaire 9 de test",
+      "etape": "Terminé"
     },
     {
       "id": 10,

@@ -1,0 +1,14 @@
+.FilterButton-container  {
+    min-height: 20px;
+     min-width: 70px;
+     border-radius: 8px;
+     border-width: 2px;
+     margin: 5px;
+ }
+ 
+ .FilterButton-title {
+     font-weight:400 ;
+     margin: 5px;
+     color: black;
+ 
+ }

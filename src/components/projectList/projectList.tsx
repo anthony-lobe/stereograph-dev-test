@@ -3,21 +3,34 @@ import axios,  { AxiosError, AxiosResponse } from "axios";
 import BoardLayout from '../boardLayout/boardLayout';
 import { Button, Modal } from '@mui/material';
 import ModalContent from '../utils/modalContent/modalContent';
+import Filters from '../utils/filters/filters';
 
 function ProjectList () {
 
     const fetchUrl = 'http://localhost:3000/projects'
+    const [searchedStatus, setSearchedStatus] = useState<'En attente' | 'En cours' | 'Terminé' | undefined>(undefined)
+    const newUrl = fetchUrl + '?etape_like=' + searchedStatus
     const [allProjects, setAllProjects] = useState<any[]>([])
     const [isFetching, setIsFetching] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-
-    const onFetching = (response: AxiosResponse) => {
+    
+    console.log('new url is : ', newUrl )
+    const onFetchingProjects = (response: AxiosResponse) => {
         if (response.data) {
             setIsFetching(true)
             setAllProjects(response.data)
         }
 
     }
+
+    const onFiltering = (status: 'En attente' | 'En cours' | 'Terminé' | undefined ) => {
+
+        setSearchedStatus(status)
+        setIsFetching(!isFetching)
+
+
+    }
+
     
     const closingModalAfterAddingProjects = () => {
 
@@ -28,7 +41,7 @@ function ProjectList () {
     const getAllProjects = (url: string) => {
         axios.get(url)
              .then((response) => {
-                onFetching(response)
+                onFetchingProjects(response)
              })
              .catch ( (error) => {
                 const err = error as AxiosError
@@ -40,19 +53,32 @@ function ProjectList () {
              })
      } 
 
+     console.log(allProjects.length)
+
      useEffect( () => {
-        getAllProjects(fetchUrl)
+        if( searchedStatus === undefined) {
+            getAllProjects(fetchUrl) 
+        } else {
+            getAllProjects(newUrl)
+        }
      }, [isFetching])
 
 
     return (
         <div>
+            <Filters onFilteringAllProjects={() => onFiltering(undefined)}
+                     onFilteringDoneProjects={() => onFiltering('Terminé')}
+                     onFilteringPendingProjects={() => onFiltering('En cours')}
+                     onFilteringWaitingProjects={() => onFiltering('En attente')}
+            />
             <BoardLayout projects={allProjects}
                          onDeleting={() => setIsFetching(!isFetching)}
             />
+            {searchedStatus === undefined ?
             <Button variant='outlined' onClick={() => setIsModalOpen(true)}> 
                 Ajouter un projet 
             </Button>
+            : null}
             <Modal open={isModalOpen}
                    onClose={() => setIsModalOpen(!isModalOpen)}
                    style={modalStyle}

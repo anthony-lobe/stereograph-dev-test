@@ -14,10 +14,9 @@ function BoardLayout({projects, onDeleting}: IBoardLayout) {
 
     const onDeletingProject = (projectId: number) => {
         const urlToFetch = `http://localhost:3000/projects/${projectId}`
-        axios.delete(urlToFetch,)
+        axios.delete(urlToFetch)
              .then( (response) => {
                 onDeleting()
-                console.log(response.data)
                 console.log(`project with id ${projectId} has been Deleted`)
              })
              .catch(error => {
@@ -60,7 +59,7 @@ function BoardLayout({projects, onDeleting}: IBoardLayout) {
                                 <Link to={`/project/${item.id}`}> consulter</Link>
                             </td>
                             <td>
-                                <Button variant='outlined' onClick={() => onDeletingProject(item.id) }>
+                                <Button variant='outlined' color='error' style={{height: 20, marginLeft: 5}} onClick={() => onDeletingProject(item.id) }>
                                     supprimer
                                 </Button>
                             </td>
