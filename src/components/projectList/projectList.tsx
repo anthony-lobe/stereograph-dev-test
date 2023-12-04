@@ -14,7 +14,6 @@ function ProjectList () {
     const [isFetching, setIsFetching] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     
-    console.log('new url is : ', newUrl )
     const onFetchingProjects = (response: AxiosResponse) => {
         if (response.data) {
             setIsFetching(true)
@@ -28,9 +27,7 @@ function ProjectList () {
         setSearchedStatus(status)
         setIsFetching(!isFetching)
 
-
     }
-
     
     const closingModalAfterAddingProjects = () => {
 
@@ -53,8 +50,6 @@ function ProjectList () {
              })
      } 
 
-     console.log(allProjects.length)
-
      useEffect( () => {
         if( searchedStatus === undefined) {
             getAllProjects(fetchUrl) 
@@ -66,19 +61,22 @@ function ProjectList () {
 
     return (
         <div>
+            <div className='justify-end flex-row '>
+
             <Filters onFilteringAllProjects={() => onFiltering(undefined)}
                      onFilteringDoneProjects={() => onFiltering('Terminé')}
                      onFilteringPendingProjects={() => onFiltering('En cours')}
                      onFilteringWaitingProjects={() => onFiltering('En attente')}
             />
+            {searchedStatus === undefined ?
+                <Button variant='outlined' style={{margin: 10}} onClick={() => setIsModalOpen(true)}> 
+                    Ajouter un projet 
+                </Button>
+            : null}
+            </div>
             <BoardLayout projects={allProjects}
                          onDeleting={() => setIsFetching(!isFetching)}
             />
-            {searchedStatus === undefined ?
-            <Button variant='outlined' onClick={() => setIsModalOpen(true)}> 
-                Ajouter un projet 
-            </Button>
-            : null}
             <Modal open={isModalOpen}
                    onClose={() => setIsModalOpen(!isModalOpen)}
                    style={modalStyle}

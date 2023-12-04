@@ -7,6 +7,7 @@ import {
 import './App.css';
 import ProjectList from './components/projectList/projectList';
 import ProjectSummary from './components/projectSummary/projectSummary';
+import { ThemeProvider } from "@material-tailwind/react";
 
 const router = createBrowserRouter([
   {
@@ -24,8 +25,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-
-    <RouterProvider router={router}/>
+    <ThemeProvider>
+      <RouterProvider router={router}/>
+    </ThemeProvider>
 
   );
 }
