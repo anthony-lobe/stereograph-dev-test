@@ -7,7 +7,7 @@ typescrit test for managing BIM projects
 
  -Run the json server
 
- Go to ./test-json-server 
+ Go to ./test-json-server : 
  json-server db.json
 
  -Start:
