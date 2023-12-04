@@ -1,12 +1,40 @@
-import React from 'react';
+import { Button, Modal } from '@mui/material';
+import React, {useState} from 'react';
 import { Link,} from 'react-router-dom';
+import axios from 'axios';
 
 interface IBoardLayout {
     projects: any[];
+    onDeleting () : void;
 
 }
 
-function BoardLayout({projects}: IBoardLayout) {
+function BoardLayout({projects, onDeleting}: IBoardLayout) {
+
+
+    const onDeletingProject = (projectId: number) => {
+        const urlToFetch = `http://localhost:3000/projects/${projectId}`
+        axios.delete(urlToFetch,)
+             .then( (response) => {
+                onDeleting()
+                console.log(response.data)
+                console.log(`project with id ${projectId} has been Deleted`)
+             })
+             .catch(error => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                  } else if (error.request) {
+                    console.log(error.request);
+                  } else {
+                    console.log('Error', error.message);
+                  }
+                  console.log(error.config);
+
+             }
+        )
+    }
     return(
         <div>
             
@@ -30,6 +58,11 @@ function BoardLayout({projects}: IBoardLayout) {
                             <td>{item.etape}</td>
                             <td>
                                 <Link to={`/project/${item.id}`}> consulter</Link>
+                            </td>
+                            <td>
+                                <Button variant='outlined' onClick={() => onDeletingProject(item.id) }>
+                                    supprimer
+                                </Button>
                             </td>
                             </tr>
                             )

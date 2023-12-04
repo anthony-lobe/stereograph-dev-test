@@ -47,7 +47,9 @@ function ProjectList () {
 
     return (
         <div>
-            <BoardLayout projects={allProjects}/>
+            <BoardLayout projects={allProjects}
+                         onDeleting={() => setIsFetching(!isFetching)}
+            />
             <Button variant='outlined' onClick={() => setIsModalOpen(true)}> 
                 Ajouter un projet 
             </Button>
