@@ -1,0 +1,26 @@
+.input-container{
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+}
+
+.input-style{
+    width: 250px;
+    height: 30px;
+    border-width: 2px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.input-for-long-text{
+    width: 250px;
+    height: 60px;
+    border-width: 2px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.radio-button-style{
+    margin-left: 10px;
+}
