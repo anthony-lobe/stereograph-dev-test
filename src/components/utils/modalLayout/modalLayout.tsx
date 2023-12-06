@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
-import axios from 'axios';
-import { DialogTitle, Modal } from '@mui/material';
+import React  from 'react';
+import { DialogTitle,  } from '@mui/material';
 import ModalBody from '../modalBody/modalBody';
-import { Dialog, DialogBody, Button, DialogFooter, DialogHeader, Typography  } from '@material-tailwind/react';
+import { Dialog, DialogBody, Button, DialogFooter, DialogHeader } from '@material-tailwind/react';
 
 
 
