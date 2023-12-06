@@ -1,20 +1,16 @@
-import { Button, Modal } from '@mui/material';
+
 import { PencilIcon } from "@heroicons/react/24/solid";
 import {TrashIcon} from "@heroicons/react/24/solid";
-import React, {useState} from 'react';
 import { Link,} from 'react-router-dom';
 import axios from 'axios';
 import {
     Card,
-    CardHeader,
     Typography,
     CardBody,
     Chip,
     CardFooter,
-    Avatar,
     IconButton,
     Tooltip,
-    Input,
   } from "@material-tailwind/react";
 
 interface IBoardLayout {
@@ -125,7 +121,7 @@ function BoardLayout({projects, onDeleting}: IBoardLayout) {
                             <td className={classes}>
                                 <Tooltip content="Consulter">
                                     <IconButton variant="text">
-                                        <Link to={`/project/${item.id}`}>
+                                        <Link to={`/projects/${item.id}`}>
                                          <PencilIcon className="h-4 w-4" />
                                         </Link>
                                     </IconButton>
@@ -171,8 +167,8 @@ function BoardLayout({projects, onDeleting}: IBoardLayout) {
         
             </CardFooter>
 
-
             </CardBody>
+
 
             </Card>
                         

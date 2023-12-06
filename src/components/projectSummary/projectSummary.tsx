@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import axios, {AxiosResponse, AxiosError} from 'axios';
 import { useParams } from 'react-router-dom';
+import {
+    Card,
+    CardBody,
+    Typography,
+  } from "@material-tailwind/react";
 
 type Project = {
     id: number,
@@ -48,19 +53,37 @@ function ProjectSummary () {
     useEffect(() => {
 
         getProjectById()
-
+    // eslint-disable-next-line 
     }, [isFetching])
 
     return (
         <div> 
             {project ? (
-                <div>
-                    <p> id : {project.id}</p>   
-                    <p>Nom du projet : {project.nom}</p>
-                    <p> Description : {project.description}</p>
-                    <p> Commentaire : {project.commentaire}</p>
-                    <p> Status : {project.etape}</p>
-                </div>
+                    <Card className="mt-6 items-center m-5 w-96">
+                        <CardBody>
+                            <Typography variant="h5" color="blue-gray" className="mb-2">
+                                {project.nom}
+                            </Typography>
+                            <Typography>
+                               Description : {project.description}
+                            </Typography>
+                            <Typography>
+                                Commentaires : {project.commentaire}
+                            </Typography>
+                            <div className='flex flex-row'>
+                                <Typography> Etape :   </Typography>
+                                <Typography color={
+                                            project.etape === "Terminé"
+                                            ? "green"
+                                            : project.etape === "En cours"
+                                            ? "amber"
+                                            : "red"
+                                        }>
+                                {project.etape}
+                                </Typography>
+                            </div>
+                        </CardBody>
+                    </Card>
             ): <p> Aucune description disponible</p>}
         </div>
     )

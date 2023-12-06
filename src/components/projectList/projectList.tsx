@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import axios,  { AxiosError, AxiosResponse } from "axios";
 import BoardLayout from '../boardLayout/boardLayout';
-import { Button, Modal } from '@mui/material';
-import ModalContent from '../utils/modalContent/modalContent';
 import Filters from '../utils/filters/filters';
+import { Button,  Typography  } from '@material-tailwind/react';
+import ModalLayout from '../utils/modalLayout/modalLayout';
 
 function ProjectList () {
 
@@ -13,6 +13,11 @@ function ProjectList () {
     const [allProjects, setAllProjects] = useState<any[]>([])
     const [isFetching, setIsFetching] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [projectName, setProjectName] = useState('')
+    const [description, setDescription] = useState('')
+    const [comments, setComments] = useState('')
+    const [status, setStatus] = useState<'En attente' | 'En cours' | 'Terminé'| undefined>(undefined)
+  
     
     const onFetchingProjects = (response: AxiosResponse) => {
         if (response.data) {
@@ -27,6 +32,10 @@ function ProjectList () {
         setSearchedStatus(status)
         setIsFetching(!isFetching)
 
+    }
+
+    const onCloseModal = () => {
+        setIsModalOpen(!isModalOpen)
     }
     
     const closingModalAfterAddingProjects = () => {
@@ -50,12 +59,42 @@ function ProjectList () {
              })
      } 
 
+     const onAddingProject = () => {
+        if (projectName !== '' 
+            && description !== ''
+            && comments !== '' 
+            && status !== undefined) {
+                const credentials = {
+                    id : allProjects.length + 1,
+                    nom : projectName,
+                    description : description,
+                    commentaire : comments,
+                    etape: status,
+                }
+
+                axios.post(fetchUrl, credentials, {
+                    headers:  { 
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+    
+                         }
+                    }).then((response) => {
+                        console.log(response.status, response.data.token);
+                    } )
+
+                    closingModalAfterAddingProjects();
+               
+            }
+        }
+        
+
      useEffect( () => {
         if( searchedStatus === undefined) {
             getAllProjects(fetchUrl) 
         } else {
             getAllProjects(newUrl)
         }
+        // eslint-disable-next-line 
      }, [isFetching])
 
 
@@ -74,32 +113,25 @@ function ProjectList () {
                 </Button>
             : null}
             </div>
+            {allProjects.length !== 0 ? 
+            
             <BoardLayout projects={allProjects}
                          onDeleting={() => setIsFetching(!isFetching)}
             />
-            <Modal open={isModalOpen}
-                   onClose={() => setIsModalOpen(!isModalOpen)}
-                   style={modalStyle}
-            >
-                <ModalContent latestId={allProjects.length}
-                              closingModal={() => closingModalAfterAddingProjects()}
-                />
-            </Modal>
+            : <Typography className=' text-center '> Aucun Projet disponible </Typography>}
+            <ModalLayout isModalOpen={isModalOpen}
+                         onCloseModal={onCloseModal}
+                         onValidate={onAddingProject}
+                         onSetDescription={setDescription}
+                         onSetProjectName={setProjectName}
+                         onSetComments={setComments}
+                         onSetStatus={setStatus}
+
+            />
+
         </div>
     )
 }
 
-
-const modalStyle : React.CSSProperties | undefined = {
-    position: "absolute",
-    border: "2px solid #000",
-    borderRadius: 10,
-    backgroundColor: 'darkgray',
-    height: 350,
-    width: 420,
-    margin: "auto",
-    padding: "2%",
-
-}
 
 export default ProjectList;

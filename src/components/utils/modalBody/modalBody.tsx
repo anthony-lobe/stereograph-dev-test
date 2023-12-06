@@ -1,13 +1,13 @@
 
 import React from 'react'
 import './modalBody.css'
+import { Input, Radio, Typography } from '@material-tailwind/react';
 
 interface IModalBody {
     onProjectNameSet (e: any) : void;
     onDescriptionSet (e: any) : void;
     onCommentsSet (e: any) : void;
     onStatusSet (e: 'En cours' | 'En attente' | 'Terminé' ) : void;
-    status : 'En cours' | 'En attente' | 'Terminé' | undefined;
 }
 
 
@@ -15,57 +15,71 @@ function ModalBody ({onProjectNameSet,
                      onCommentsSet, 
                      onDescriptionSet, 
                      onStatusSet,
-                     status
                     }: IModalBody
                    ) {
     return (
-        <div>
-            <input name="projectName"
-                  onChange={(e) => onProjectNameSet(e.target.value)} 
-                  className="input-style"
-                  placeholder="Nom du projet"
+        <div className="flex  flex-col gap-10">
+
+            <Input label='Nom du projet'
+                   variant='outlined'
+                   onChange={(e) => onProjectNameSet(e.target.value)} 
+                   crossOrigin={undefined}
+                   
             />
-            <input name="projectDescription"
-                   onChange={(e) => onDescriptionSet(e.target.value)}
-                   className="input-for-long-text" 
-                   placeholder="Description du projet"
+
+            <Input label='Description du projet'
+                   variant='outlined'
+                   onChange={(e) => onDescriptionSet(e.target.value)} 
+                   crossOrigin={undefined}
+                   className='h-16'
+
             />
-            <input name="projectComments"
+
+            <Input label='Insérez vos commentaires'
+                   variant='outlined'
                    onChange={(e) => onCommentsSet(e.target.value)} 
-                   className="input-for-long-text"
-                   placeholder="insérez vos commentaires"
+                   crossOrigin={undefined}
+                   className='h-24'
+
             />
 
-            <p> STATUS : </p>
-        <div>
+            <div className="flex mt-5 w-max gap-4">
 
-        <label>
-            <input type="radio" 
-                   name="projectStatus" 
-                   value={status}
-                   onClick={() => onStatusSet('En attente')}
-                   className="radio-button-style"
-            /> 
-            En attente 
-        </label>
-        <label>
-            <input type="radio" 
-                   name="projectStatus"
-                   value={status} 
-                   onClick={() => onStatusSet('En cours')}
-                   className="radio-button-style"
-            /> 
-            En cours 
-        </label>
-        <label>
-            <input type="radio" 
-                   name="projectStatus" 
-                   value={status} 
-                   onClick={() => onStatusSet('Terminé')}
-                   className="radio-button-style"
-            /> 
-            Terminé 
-        </label>
+                <div className=' flex  '>
+                <Radio name="status"
+                    onClick={() => onStatusSet('En attente')} 
+                    crossOrigin={undefined} 
+                    color='red'
+                />
+
+                <Typography className=' mt-2 '> En attente </Typography>
+
+                </div>
+
+                <div className=' flex  '>
+                <Radio name="status"
+                    onClick={() => onStatusSet('En cours')} 
+                    crossOrigin={undefined} 
+                    color='orange'
+                />
+
+                <Typography className=' mt-2'> En cours  </Typography>
+
+                </div>
+
+                <div className=' flex  '>
+                <Radio name="status"
+                    onClick={() => onStatusSet('Terminé')} 
+                    crossOrigin={undefined} 
+                    color='green'
+                />
+
+                <Typography className=' mt-2'> Terminé  </Typography>
+
+            </div>
+        
+      
+     
     </div>
         </div>
     )
